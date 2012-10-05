@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Code Review</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="phpreview.js"></script>
+</head>
+<body>
+	<h1>phpgitreview</h1>
+	<div class="subheadline">a simple PHP based code review tool for git repositories</div>
+	
+	<h2>Commits and selected review range</h2>
+	<div class="commitsblock">
+		<ul class="commits">
+			<!-- SECTION:commit -->
+			<li class="commit {#commitselected#}" data-commit="{#commitid#}">
+				<a href="?since={#commitid#}">
+					<span class="label">{#committext#}</span>
+					<span class="author">(by {#author#})</span>
+				</a>
+			</li>
+			<!-- ENDSECTION -->
+		</ul>
+	</div>
+	
+	<h2>File Changes</h2>
+	
+	<!-- SECTION:fileblock -->
+	<div class="fileblock">
+		<h3>{#filename#}</h3>
+		
+		<!-- SECTION:binary -->
+		<p class="binaryinfo">(This is a binary file. It cannot be displayed as text.)</p>
+		<!-- ENDSECTION -->
+		
+		<!-- SECTION:codeblock -->
+		<div class="codeblock">
+			<!-- SECTION:line -->
+			<div class="codeline {#codeline_class#}" data-lineno="{#lineno#}" data-oldlineno="{#oldlineno#}">
+				<div class="oldnumber">{#oldlineno#}</div>
+				<div class="number">{#lineno#}</div>
+				<div class="line"><code>{#code#}</code><!-- SECTION:codepartover80 --><code class="over80">{#codeover80#}</code><!-- ENDSECTION --></div>
+				<!-- SECTION:comments -->
+				<div class="comments {#comments_status#}" data-lines="{#lines#}" data-oldlines="{#oldlines#}">
+					<!-- SECTION:comment -->
+					<div class="comment">
+						<span class="by">{#commenter#}:</span>
+						<div class="commenttext">{#commenttext#}</div>
+					</div>
+					<!-- ENDSECTION -->
+				</div>
+				<!-- ENDSECTION -->
+			</div>
+			<!-- ENDSECTION -->
+		</div>
+		<!-- ENDSECTION -->
+		
+	</div>
+	<!-- ENDSECTION -->
+	
+</body>
+</html>

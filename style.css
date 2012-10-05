@@ -1,0 +1,214 @@
+body {
+	background-color: #F8F8F8;
+	font-family: 'Arial', sans-serif;
+	padding-bottom: 100px;
+}
+ul.commits {
+	list-style: none;
+	padding-left: 0;
+}
+h1 {
+	margin: 20px 0 10px;
+}
+h2 {
+	margin: 40px 0 20px;
+}
+h3 {
+	margin: 20px 0 10px;
+}
+.subheadline {
+	margin-top: -10px;
+}
+.commitsblock .commit > a {
+	text-decoration: none;
+	color: black;
+}
+.commitsblock .commit.selected {
+	background-color: #A0FFA0;
+}
+.commitsblock .commit span.label {
+	display: inline-block;
+	width: 460px;
+}
+.commitsblock .commit span.author {
+	display: inline-block;
+	width: 240px;
+}
+
+.codeblock {
+	border: 1px solid #C0C0C0;
+	font-family: monospace;
+	font-size: 14px;
+	width: 1000px;
+	overflow: auto;
+}
+.codeline {
+}
+.codeline:nth-child(odd) {
+	background-color: white;
+}
+.codeline:nth-child(even) {
+	background-color: #F0F0F0;
+}
+.codeline .number,
+.codeline .oldnumber {
+	float: left;
+	width: 40px;
+	min-height: 17px;
+	text-align: right;
+	padding-right: 10px;
+	border-right: 1px solid #C0C0C0;
+	color: #808080;
+}
+.codeline .number {
+	margin-right: 2px;
+}
+.codeline.marked .number {
+	margin-right: 0px;
+	border-right: 3px solid #2020FF;
+}
+.codeline .line {
+	white-space: pre;
+	min-height: 17px;
+	min-width: 1px;
+}
+code.over80 {
+	color: #707070;
+	border-left: 1px solid #D0D0D0;
+}
+.fileblock {
+	padding: 0 0 20px;
+	border-top: 2px dashed #C0C0C0;
+}
+.binaryinfo {
+	color: #A0A0A0;
+	font-size: 14px;
+}
+
+
+/********** comments **********/
+
+.codeline .comments {
+	border: 1px solid #A0A0A0;
+	margin: 0 0 0 360px;
+	font-family: 'Arial', sans-serif;
+	padding: 2px 10px;
+	background-color: white;
+	border-radius: 5px;
+	max-width: 600px;
+	box-shadow: 0px 5px 13px 4px rgba(0,0,0, 0.5);
+	position: relative;
+	color: black;
+}
+.codeline .comments .comment {
+	border-bottom: 1px solid #909090;
+	padding-bottom: 5px;
+	padding-top: 5px; 
+}
+.codeline .comments .comment:last-child {
+	border-bottom: 0; 
+}
+.codeline .comment .by {
+	display: inline-block;
+	min-width: 100px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #606060;
+}
+.codeline .comments.ok {
+	 border-left: 4px solid #20A020;
+}
+.codeline .comments.info {
+	 border-left: 4px solid #7070FF;
+}
+.codeline .comments.warn {
+	 border-left: 4px solid #E09000;
+}
+.codeline .comments.error {
+	 border-left: 4px solid #E02020;
+}
+.codeline .comments.marked {
+	border-right: 3px solid #2020FF; 
+}
+.codeline .comment .commenttext {
+	margin-top: -15px;
+	padding-left: 100px;
+}
+.codeline .comment .commenttext > p:first-child {
+	margin-top: 0;
+}
+.codeline .comment .commenttext > p:last-child {
+	margin-bottom: 0;
+}
+
+/********** colors **********/
+
+.codeline:nth-child(odd).selected {
+	background-color: #C0C0FF !important;
+}
+.codeline:nth-child(even).selected {
+	background-color: #B8B8FF !important;
+}
+
+.codeline.added:nth-child(odd) {
+	background-color: #FFFF80;
+}
+.codeline.added:nth-child(even) {
+	background-color: #F0F070;
+}
+
+.codeline.deleted:nth-child(odd) {
+	background-color: #FFD0D0;
+}
+.codeline.deleted:nth-child(even) {
+	background-color: #FFC4C4;
+}
+.codeline.deleted,
+.codeline.deleted code.over80 {
+	color: #707070;
+}
+
+.codeline.ok:nth-child(odd),
+.codeline.ok_dirty:nth-child(odd) {
+	background-color: #B8FFB8;
+}
+.codeline.ok:nth-child(even),
+.codeline.ok_dirty:nth-child(even) {
+	background-color: #A8FFA8;
+}
+
+.codeline.warn:nth-child(odd),
+.codeline.warn_dirty:nth-child(odd) {
+	background-color: #FFC040;
+}
+.codeline.warn:nth-child(even),
+.codeline.warn_dirty:nth-child(even) {
+	background-color: #FFB030;
+}
+
+.codeline.info:nth-child(odd),
+.codeline.info_dirty:nth-child(odd) {
+	background-color: #E8E8FF;
+}
+.codeline.info:nth-child(even),
+.codeline.info_dirty:nth-child(even) {
+	background-color: #E0E0FF;
+}
+
+.codeline.error:nth-child(odd),
+.codeline.error_dirty:nth-child(odd) {
+	background-color: #FF8080;
+}
+.codeline.error:nth-child(even),
+.codeline.error_dirty:nth-child(even) {
+	background-color: #FF7070;
+}
+
+.codeline.ok_dirty    { border-right: 5px solid #FF8080; }
+.codeline.info_dirty  { border-right: 5px solid #FFA0A0; }
+.codeline.warn_dirty  { border-right: 5px solid #FF8080; }
+.codeline.error_dirty { border-right: 5px solid #FF0000; }
+
+
+
+
