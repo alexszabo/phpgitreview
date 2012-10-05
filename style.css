@@ -131,8 +131,8 @@ code.over80 {
 	border-right: 3px solid #2020FF; 
 }
 .codeline .comment .commenttext {
-	margin-top: -15px;
-	padding-left: 100px;
+	margin-top: -17px;
+	padding-left: 120px;
 }
 .codeline .comment .commenttext > p:first-child {
 	margin-top: 0;
