@@ -48,7 +48,7 @@ $parts = DiffTools::SplitByStartingLine($log, '/^commit\s(.*)$/');
 foreach($parts as $part) {
 	$commit = array();
 	$commit['committext'] = ''; 
-	 
+	
 	foreach(explode("\n", $part) as $line) {
 		if (substr($line, 0, 7) == "commit ") {
 			$commit['commit'] = substr($line, 7);
@@ -78,27 +78,36 @@ $t = new SFSectionTemplate('template.html');
 //-----------------------
 //select since commit
 //-----------------------
+$defaultcommit = true; //systems selects a commit on own merits
 $usersince = "";
+if (sizeof($commits) >= 3) {
+	$usersince = $commits[2]['commit']; //diff last commit
+}
 if (isset($_GET['since'])) {
 	$usersince = $_GET['since'];
+	$defaultcommit = false;
 }
-if ($usersince == "") {
-	//TODO: MEDIUM: lost the possibility for getting since before loading reviews - fix that later
-//	$reviewfile = $reviews->getLastestReviewFile();
-//	if ($reviewfile != null) {
-//		$usersince = $reviewfile->since;
-//	} else {
-		$usersince  = $commits[sizeof($commits)-1]['commit'];
-//	}
-}
-$lastcommit = $commits[sizeof($commits)-1]['commit'];
 
 //-----------------------------------------------------------
 // load review files
 //-----------------------------------------------------------
 $reviewfileslocation = $repository['location'].$repository['reviewspath'];
-$reviews = new ReviewFileList($reviewfileslocation, $usersince != "" ? $usersince : $lastcommit);
+$reviews = new ReviewFileList($reviewfileslocation, $defaultcommit ? "" : $usersince);
 
+
+//-----------------------------------------------------------------------------
+//select better usersince if user did not override and if review file exists
+//-----------------------------------------------------------------------------
+if ($defaultcommit) {
+	
+	$latestreviewfile = $reviews->getLastestReviewFile();
+	if ($latestreviewfile != null) {
+		$usersince = $latestreviewfile->since;
+		//need reload reviews!
+		//TODO: LOW: do not reload but just call adjustments
+		$reviews = new ReviewFileList($reviewfileslocation, $usersince);
+	}
+}
 
 //-----------------------
 //show commits

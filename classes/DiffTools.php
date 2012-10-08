@@ -5,23 +5,22 @@ class DiffTools {
 	public static function SplitByStartingLine($content, $startpattern) {
 		$inblock = false;
 		$resultlist = array();
-		$currentlines = array();
+		$index = -1; 
 		foreach(explode("\n", $content) as $line) {
 			if (preg_match($startpattern, $line)) {
-				if ($inblock) {
-					array_push($resultlist, implode("\n", $currentlines));
-					$currentlines = array();
-				}
+				$index++;
+				$resultlist[$index] = "";
 				$inblock = true;
 			}
 			if ($inblock) {
-				array_push($currentlines, $line);
+				if (empty($resultlist[$index])) {
+					$resultlist[$index] .= $line;
+				} else {
+					$resultlist[$index] .= "\n".$line;
+				}
 			}
 		}
-		if ($inblock) {
-			array_push($resultlist, implode("\n", $currentlines));
-		}
-		
+
 		return $resultlist;
 	}
 }

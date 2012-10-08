@@ -44,17 +44,17 @@ class ReviewIssue {
 	}
 	
 	public function areLinesSet() {
-		return ($this->lines != "");
+		return sizeof($this->lines_array) > 0;
 	}
 	
 	public function areOldLinesSet() {
-		return ($this->oldlines != "");
+		return sizeof($this->oldlines_array) > 0;
 	}
 	
 	public function isSomeContentDefined() {
 		if ($this->status != "")         return true;
 		if (sizeof($this->comments) > 0) return true;
-		if ($resolved)                   return true;
+		//if ($resolved)                   return true;
 		
 		return false;
 	}
@@ -168,7 +168,7 @@ class ReviewIssue {
 		
 		foreach ($this->oldlines_array as $oldlineno => $value) {
 			if ($start_to_since != null) {
-				$olderlineno = $start_to_since->GetOldLineNumberForNewLineNumber($olderlineno);
+				$olderlineno = $start_to_since->GetOldLineNumberForNewLineNumber($oldlineno);
 				if ($olderlineno == false) {
 					//TODO: MEDIUM: is old and had no line before - show as intermediate line later
 				} else {

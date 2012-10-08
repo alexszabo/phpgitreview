@@ -17,9 +17,62 @@ $(function(){
 			}
 		}
 		return list;
-	} 
+	}
+	
+	var j_commits_20plus = $('.commitsblock .commits li.commit:not(.selected)').slice(20);
+	j_commits_20plus.hide();
+	$('#showmorecommits').click(function(e){
+		e.preventDefault();
+		j_commits_20plus.toggle();	
+	});
+	
+	$('.codeblock').each(function(){
+		var jlines = $(this).find('.codeline');
+		if (jlines.size() < 15+20+15) return;
+		var continuous = 0;
+		var size = jlines.size()
+		for(var i=0; i<=size; i++) {
+			if (i<size) {
+				var jline = jlines.eq(i);
+				if (jline.hasClass('ok')) {
+					continuous++;
+					continue;	
+				}
+			}
+			if (continuous > 15+20+15) {
+				for(var j=i-continuous+15; j<i-15; j++) {
+					jlines.eq(j).addClass('collapsable');
+				}
+			}
+			continuous = 0;
+			
+		}
+	});
+	
+	$('.codeblock .codeline:not(.collapsable) + .codeline.collapsable')
+		.before('<div class="codeline collapsehandle ok collapsed">...</div>');
+	$('.codeblock .codeline.collapsable').hide();
+		
 		
 	$('body')
+	.delegate('.collapsehandle', 'click', function(e){
+		if (e.isDefaultPrevented()) return;
+		e.preventDefault();
+		var jnext = $(this).next('.codeline.collapsable');
+		if ($(this).hasClass('collapsed')) {
+			$(this).removeClass('collapsed');
+			while (jnext.size() > 0) {
+				jnext.show();
+				jnext = jnext.next('.codeline.collapsable');
+			}
+		} else {
+			$(this).addClass('collapsed');
+			while (jnext.size() > 0) {
+				jnext.hide();
+				jnext = jnext.next('.codeline.collapsable');
+			}
+		}
+	})
 	.delegate('.fileblock .codeline', 'click', function(e){
 		if (e.isDefaultPrevented()) return;
 		e.preventDefault();
@@ -37,15 +90,16 @@ $(function(){
 		if (e.isDefaultPrevented()) return;
 		e.preventDefault();
 		$(this).addClass('marked');
+		var jcodeblock = $(this).closest('div.codeblock');
 		
 		var lines = getLines($(this).attr('data-lines'));
 		for(var i=0; i<lines.length; i++) {
-			$(".codeline[data-lineno='"+lines[i]+"']").addClass('marked');
+			jcodeblock.find(".codeline[data-lineno='"+lines[i]+"']").addClass('marked');
 		}
 		
 		var oldlines = getLines($(this).attr('data-oldlines'));
 		for(var i=0; i<oldlines.length; i++) {
-			$(".codeline[data-oldlineno='"+oldlines[i]+"']").addClass('marked');
+			jcodeblock.find(".codeline[data-oldlineno='"+oldlines[i]+"']").addClass('marked');
 		}
 		
 	})

@@ -148,8 +148,8 @@ class FileView {
 				}
 			}
 			if ($parsecomments_wrap) {
-				$t->SetVar('lines', implode(",", $issue->getLinesArray()));
-				$t->SetVar('oldlines', implode(",", $issue->getOldLinesArray()));
+				$t->SetVar('lines', implode(",", array_keys($issue->getLinesArray())));
+				$t->SetVar('oldlines', implode(",", array_keys($issue->getOldLinesArray())));
 				$t->SetVar('comments_status', strtolower(trim($issue->getStatus())));
 				$t->ParseSection('comments');
 				$parsecomments_wrap = false;

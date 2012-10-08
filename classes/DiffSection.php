@@ -15,6 +15,9 @@ class DiffSection {
 	
 	public function __construct($lines) {
 		
+		if (defined("DEBUG") && (DEBUG))
+			$originallines = $lines;
+		
 		$matches = array();
 		preg_match('/^@@ \-([0-9]+)\,([0-9]+) \+([0-9]+)\,([0-9]+) @@/', $lines, $matches);
 		$lines = explode("\n", $lines, 2);
@@ -40,12 +43,24 @@ class DiffSection {
 		$oldline = $this->remove_from;
 		$newline = $this->insert_from;
 		
+		$skipwarning = false;
+		
 		foreach ($this->lines as $line) {
 			if ($line == "") {
 				$othercount++;
 				if ($addcount + $delcount + $keepcount == 0)
 					$this->emptylines_upfront++;  
 				continue;
+			}
+			
+			//ignore warnings
+			if ($skipwarning) {
+				$skipwarning = false;
+				continue; //skip once
+			}
+			if (substr($line, 0, 8) == 'warning:') {
+				$skipwarning = true; //skip next line too
+				continue;            //skip this line
 			}
 			
 			switch (substr($line, 0, 1)) {
@@ -81,6 +96,9 @@ class DiffSection {
 					break;
 					
 				default:
+					if (defined("DEBUG") && (DEBUG))
+						echo "<pre>".htmlspecialchars($originallines)."</pre>";
+					
 					throw new Exception("Found character '".substr($line, 0, 1).
 						"'(".ord(substr($line, 0, 1)).") at the start of a diff section line. ".
 						"Expected +,-, space or \\."

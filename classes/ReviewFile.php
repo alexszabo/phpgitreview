@@ -7,7 +7,7 @@ class ReviewFile {
 	public $until = "";
 	public $data = array(); //format [filename][0..n] => each (0..n) is a ReviewIssue instance
 	
-	public function __construct($reviewfilename, $usersince) {
+	public function __construct($reviewfilename, $usersince="") {
 		$this->reviewfilename = $reviewfilename;
 		$contents = file_get_contents($this->reviewfilename);
 
@@ -139,7 +139,8 @@ class ReviewFile {
 		}
 		
 		//adjust issue lines by Diff between until and working copy
-		$this->AdjustIssueLinesByDiff($usersince);
+		if ($usersince != "")
+			$this->AdjustIssueLinesByDiff($usersince);
 		
 	}
 	

@@ -6,7 +6,7 @@ class ReviewFileList {
 	
 	private $reviewfiles = array();
 
-	public function __construct($review_files_path, $usersince) {
+	public function __construct($review_files_path, $usersince="") {
 		$reviewfiles = array();
 		if (is_dir($review_files_path)) {
 		    if ($dh = opendir($review_files_path)) {

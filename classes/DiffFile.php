@@ -15,7 +15,7 @@ class DiffFile {
 			$originallines = $lines;
 		
 		//parse first line 
-		list($line, $lines) =  explode("\n", $lines, 2);
+		list($line, $lines) =  explode("\n", $lines."\n", 2);
 		
 		$matches = array();
 		if (preg_match_all('#^diff \-\-git a/(.*) b/(.*)$#', $line, $matches)) {
@@ -31,14 +31,14 @@ class DiffFile {
 		if (trim($lines) == "")	return;
 		
 		//parse optinal second line and third line
-		list($line, $lines) =  explode("\n", $lines, 2);
+		list($line, $lines) =  explode("\n", $lines."\n", 2);
 		if (substr($line, 0, 8) == 'new file') {
 			$this->isnewfile = true;
-			list($line, $lines) =  explode("\n", $lines, 2); //get next line 
+			list($line, $lines) =  explode("\n", $lines."\n", 2); //get next line 
 		}
 		if (substr($line, 0, 12) == 'deleted file') {
 			$this->isdeletedfile = true;
-			list($line, $lines) =  explode("\n", $lines, 2); //get next line 
+			list($line, $lines) =  explode("\n", $lines."\n", 2); //get next line 
 		}
 		
 		//just expect it .. we do not care about the value
@@ -49,11 +49,16 @@ class DiffFile {
 		}
 		
 		
-		list($line, $lines) =  explode("\n", $lines, 2);
+		list($line, $lines) =  explode("\n", $lines."\n", 2);
 		
 		//skip binary files
 		if (substr($line, 0, 11) == 'Binary file') {
 			$this->isBinary = true;
+			return;
+		}
+		
+		//some files have no changes but appear in the diff??
+		if ((trim($line) == "") && (trim($lines) == "")) {
 			return;
 		}
 		
@@ -65,7 +70,7 @@ class DiffFile {
 		}
 
 		//parse +++ line
-		list($line, $lines) =  explode("\n", $lines, 2);
+		list($line, $lines) =  explode("\n", $lines."\n", 2);
 		if (substr($line, 0, 4) != '+++ ') {
 			if (defined("DEBUG") && (DEBUG))
 				echo "<pre>".htmlspecialchars($originallines)."</pre>";

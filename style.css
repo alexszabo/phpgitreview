@@ -85,6 +85,27 @@ code.over80 {
 	font-size: 14px;
 }
 
+.collapsehandle {
+	text-align: center;
+	line-height: 15px;
+	height: 15px;
+	color: #808080;
+	border-bottom: 1px solid #D0D0D0;
+	cursor: pointer; 
+}
+.collapsehandle.collapsed {
+	line-height: 25px;
+	height: 25px;
+	box-shadow: inset -1px 5px 5px -3px rgba(0,0,0, 0.4);
+}
+
+.codeline.ok.collapsehandle:nth-child(odd),
+.codeline.ok.collapsehandle:nth-child(even),
+.codeline.ok_dirty.collapsehandle:nth-child(odd),
+.codeline.ok_dirty.collapsehandle:nth-child(even) {
+	background-color: #CBFFCB;
+}	
+
 
 /********** comments **********/
 
