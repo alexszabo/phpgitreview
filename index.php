@@ -9,7 +9,7 @@ require_once 'classes/Diff.php';
 require_once 'classes/SFSectionTemplate.php';
 require_once 'classes/FileView.php';
 
-define("REVIEW_GIT_COMMAND", "cd ".$repository['location']."&".REVIEW_GIT_PATH);
+define("REVIEW_GIT_COMMAND", "git --git-dir=".$repository['location']."/.git --work-tree=".$repository['location']); 
 
 //-----------------------------------------------------------
 // DEBUG
@@ -35,7 +35,24 @@ $commits = array(
 	// all commits before have a ascending index according to log position
 	//TODO: HIGH: clarify how to handle merges 
 );
- 
+
+//-----------------------------------------------------------
+// test environment first
+//-----------------------------------------------------------
+$gitoutput = shell_exec(REVIEW_GIT_COMMAND." 2>&1");
+if ( substr(trim($gitoutput), 0, 10) != "usage: git" ) {
+	echo "<html><body><h1>Setup Error</h1>".
+		"The command 'git' was not found on your machine.<br>\n".
+		"Please ensure the enviroment variables (e.g. PATH )are set correctly.<br>\n".
+		"<br>\n".
+		"To test the correct setup type 'git' on your console.<br>\n".
+		"(Restarting your webserver might be necessary after changing the PATH parameter.)<br>\n".
+		"<br><b>Details:</b><pre>".$gitoutput."</pre>";
+		"</body></html>";
+	exit();
+}
+$gitoutput = null; //collect garbadge
+
 
 //-----------------------------------------------------------
 // load commits
