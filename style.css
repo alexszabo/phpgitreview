@@ -48,7 +48,7 @@ h3 {
 	background-color: white;
 }
 .codeline:nth-child(even) {
-	background-color: #F0F0F0;
+	background-color: #F8F8F8;
 }
 .codeline .number,
 .codeline .oldnumber {
