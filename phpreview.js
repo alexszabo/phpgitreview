@@ -29,29 +29,52 @@ $(function(){
 	$('.codeblock').each(function(){
 		var jlines = $(this).find('.codeline');
 		if (jlines.size() < 15+20+15) return;
-		var continuous = 0;
+		
+		var continuous_ok = 0;
 		var size = jlines.size()
 		for(var i=0; i<=size; i++) {
 			if (i<size) {
 				var jline = jlines.eq(i);
 				if (jline.hasClass('ok')) {
-					continuous++;
+					continuous_ok++;
 					continue;	
 				}
 			}
-			if (continuous > 15+20+15) {
-				for(var j=i-continuous+15; j<i-15; j++) {
+			if (continuous_ok > 15+20+15) {
+				for(var j=i-continuous_ok+15; j<i-15; j++) {
 					jlines.eq(j).addClass('collapsable');
 				}
 			}
-			continuous = 0;
-			
+			continuous_ok = 0;
 		}
+		
+		var continuous_unchanged = 0;
+		var size = jlines.size()
+		for(var i=0; i<=size; i++) {
+			if (i<size) {
+				var jline = jlines.eq(i);
+				if ((!jline.hasClass('added')) && (!jline.hasClass('deleted')) && (!jline.hasClass('ok'))) {
+					continuous_unchanged++;
+					continue;	
+				}
+			}
+			if (continuous_unchanged > 15+20+15) {
+				for(var j=i-continuous_unchanged+15; j<i-15; j++) {
+					jlines.eq(j).addClass('collapsable');
+				}
+			}
+			continuous_unchanged = 0;
+		}		
 	});
 	
 	$('.codeblock .codeline:not(.collapsable) + .codeline.collapsable')
-		.before('<div class="codeline collapsehandle ok collapsed">...</div>');
+		.before('<div class="codeline collapsehandle collapsed">...</div>');
 	$('.codeblock .codeline.collapsable').hide();
+	$('.collapsehandle').each(function(){
+		if ($(this).next().hasClass('ok')) {
+			$(this).addclass('ok')
+		}
+	});
 		
 		
 	$('body')
